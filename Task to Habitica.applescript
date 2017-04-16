@@ -1,8 +1,10 @@
--- Declare Variables
---  put your api user string here
-set apiUser to ""
---  put your api key here
-set apiKey to ""
+set clipboardData to (the clipboard as text)
+set thisFolder to POSIX path of ((path to me as text) & "::")
+set configFile to ((path to me as text) & "::") & "config.txt"
+set lns to paragraphs of (read file configFile as Çclass utf8È)
+set apiUser to first item of lns
+set apiKey to second item of lns
+
 
 
 tell application "OmniFocus"
@@ -14,6 +16,8 @@ tell application "OmniFocus"
 			set currentTask to item a of flaggedTasks
 			
 			set taskName to name of currentTask
+			set the clipboard to taskName
+			set taskName to (do shell script "python '" & thisFolder & "EscapeChar.py'")
 			
 			set taskID to id of currentTask
 			
@@ -26,3 +30,4 @@ tell application "OmniFocus"
 		end repeat
 	end tell
 end tell
+set the clipboard to clipboardData
