@@ -7,6 +7,7 @@ set apiKey to second item of completed_habticas
 
 -- Get contents of Task log to make sure we're not dealing with duplicates
 set taskLog to ((path to me as text) & "::") & "TaskLog.txt"
+set errorLog to ((path to me as text) & "::") & "ErrorLog.txt"
 set urlLog to read alias taskLog
 
 
@@ -27,21 +28,6 @@ on write_to_file(this_data, target_file, append_data)
 	end try
 end write_to_file
 
-on completeTask()
-	tell application "OmniFocus"
-		tell front window
-			set my_sel to selected trees of content
-			if my_sel is not equal to {} then
-				set my_selection to value of item 1 of my_sel
-				if my_selection is not equal to {} then
-					set completed of my_selection to true
-				end if
-			end if
-		end tell
-	end tell
-end completeTask
-
-
 
 
 -- Run python script to get API return
@@ -55,10 +41,25 @@ repeat with habtica_task in completed_habticas
 	set current_Url to "omnifocus:///task/" & habtica_task
 	if current_Url is not in urlLog then
 		set url_2_log to return & current_Url & return
-		do shell script "open " & current_Url
-		delay 0.5
-		completeTask()
-		delay 2
+		tell application "OmniFocus"
+			tell default document
+				try
+					set individual_habT to (task id (habtica_task))
+					set completed of individual_habT to true
+					
+				on error error_message number error_number
+					if error_number = -1728 then
+						set errorWrite to "Encountered error trying to open task : " & habtica_task & return
+						my write_to_file(errorWrite, errorLog, true)
+						display notification "Omnifocus-CrossOff encountered an error, please see errorLog.txt"
+					else
+						set errorWrite to "Encountered error" & error_number & " : " & error_message & return
+						my write_to_file(errorWrite, errorLog, true)
+						display notification "Omnifocus-CrossOff encountered an error, please see errorLog.txt"
+					end if
+				end try
+			end tell
+		end tell
 		my write_to_file(url_2_log, taskLog, true)
 	end if
 end repeat
