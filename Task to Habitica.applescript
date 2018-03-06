@@ -1,4 +1,6 @@
-set clipboardData to (the clipboard as text)
+try
+	set clipboardData to (the clipboard as text)
+end try
 set thisFolder to POSIX path of ((path to me as text) & "::")
 set configFile to ((path to me as text) & "::") & "config.txt"
 set lns to paragraphs of (read file configFile as Çclass utf8È)
@@ -30,4 +32,6 @@ tell application "OmniFocus"
 		end repeat
 	end tell
 end tell
-set the clipboard to clipboardData
+try
+	set the clipboard to clipboardData
+end try
