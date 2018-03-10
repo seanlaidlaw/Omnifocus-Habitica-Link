@@ -46,25 +46,25 @@ tell application "OmniFocus"
 					-- my example requires GNU sed to be installed : brew install sed	
 					
 				else if taskName starts with "Buy more" then
-					set shorterName to do shell script "echo '" & taskName & "' | gsed 's/buy\\s*more\\s*//gI'"
+					set shorterName to do shell script "PATH='/usr/bin:/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin:$PATH';echo '" & taskName & "' | gsed 's/buy\\s*more\\s*//gI'"
 					set MyProject to project "Shopping" of folder "Home"
 					move currentTask to end of tasks of MyProject
 					set name of currentTask to shorterName
 					
 				else if taskName starts with "Buy a" then
-					set shorterName to do shell script "echo '" & taskName & "' | gsed 's/buy\\s*a\\s*//gI'"
+					set shorterName to do shell script "PATH='/usr/bin:/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin:$PATH';echo '" & taskName & "' | gsed 's/buy\\s*a\\s*//gI'"
 					set MyProject to project "Shopping" of folder "Home"
 					move currentTask to end of tasks of MyProject
 					set name of currentTask to shorterName
 					
 				else if taskName starts with "Buy an" then
-					set shorterName to do shell script "echo '" & taskName & "' | gsed 's/buy\\s*an\\s*//gI'"
+					set shorterName to do shell script "PATH='/usr/bin:/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin:$PATH';echo '" & taskName & "' | gsed 's/buy\\s*an\\s*//gI'"
 					set MyProject to project "Shopping" of folder "Home"
 					move currentTask to end of tasks of MyProject
 					set name of currentTask to shorterName
 					
 				else if taskName starts with "Buy" then
-					set shorterName to do shell script "echo '" & taskName & "' | gsed 's/buy\\s*//gI'"
+					set shorterName to do shell script "PATH='/usr/bin:/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin:$PATH';echo '" & taskName & "' | gsed 's/buy\\s*//gI'"
 					set MyProject to project "Shopping" of folder "Home"
 					move currentTask to end of tasks of MyProject
 					set name of currentTask to shorterName
