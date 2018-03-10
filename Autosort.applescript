@@ -79,6 +79,11 @@ tell application "OmniFocus"
 					set context of currentTask to theContext
 					set name of currentTask to shorterName
 					
+				else if taskName starts with "PARSEME" then
+					set taskName to ((characters 8 thru -1 of taskName) as string)
+					set newTask to parse tasks into with transport text taskName with as single task
+					delete currentTask
+					
 					
 					--Contexts
 					-- Look for tasks starting with "SmDyMyB" and set context to "Someday/Maybe", while deleting "SmDyMyB" prefix	
