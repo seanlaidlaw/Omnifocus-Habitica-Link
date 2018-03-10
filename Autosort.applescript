@@ -3,7 +3,8 @@ try
 end try
 set thisFolder to POSIX path of ((path to me as text) & "::")
 set configFile to ((path to me as text) & "::") & "config.txt"
-set lns to paragraphs of (read file configFile as Çclass utf8È)
+set lns to paragraphs of (read file configFile)
+log lns
 set apiUser to first item of lns
 set apiKey to second item of lns
 
