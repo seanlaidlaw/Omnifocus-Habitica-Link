@@ -6,8 +6,24 @@ set apiKey to second item of completed_habticas
 
 
 -- Get contents of Task log to make sure we're not dealing with duplicates
-set taskLog to ((path to me as text) & "::") & "TaskLog.txt"
+try
+	set errorLog to alias (((path to me as text) & "::") & "ErrorLog.txt")
+on error number -43
+	set posixerrorLog to (quoted form of POSIX path of (((path to me as text) & "::") & "ErrorLog.txt"))
+	do shell script ("echo \"\" > " & posixerrorLog)
+end try
 set errorLog to ((path to me as text) & "::") & "ErrorLog.txt"
+
+
+try
+	set taskLog to alias (((path to me as text) & "::") & "TaskLog.txt")
+on error number -43
+	set posixtaskLog to (quoted form of POSIX path of (((path to me as text) & "::") & "TaskLog.txt"))
+	do shell script ("echo \"\" > " & posixtaskLog)
+end try
+set taskLog to ((path to me as text) & "::") & "TaskLog.txt"
+
+
 set urlLog to read alias taskLog
 set urlerrorLog to read alias errorLog
 
