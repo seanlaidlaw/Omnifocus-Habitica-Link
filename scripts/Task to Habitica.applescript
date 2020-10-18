@@ -2,7 +2,12 @@ try
 	set clipboardData to (the clipboard as text)
 end try
 set thisFolder to POSIX path of ((path to me as text) & "::")
-set configFile to ((path to me as text) & "::") & "config.txt"
+
+-- set configFile to parent folder of current file
+set configFile to ((path to me as text) & "::") as alias
+-- set to config.txt in parent of parent of current file
+set configFile to ((((configFile as text) & "::") as alias) as text) & "config.txt"
+
 set lns to paragraphs of (read file configFile as Çclass utf8È)
 set apiUser to first item of lns
 set apiKey to second item of lns

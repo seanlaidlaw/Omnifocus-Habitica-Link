@@ -33,7 +33,7 @@ end write_to_file
 
 -- Run python script to get API return
 set thisFolder to POSIX path of ((path to me as text) & "::")
-set pythonOut to (do shell script ("python '" & thisFolder & "Habitica.py' " & apiUser & " " & apiKey))
+set pythonOut to (do shell script ("python '" & thisFolder & "/scripts/Habitica.py' " & apiUser & " " & apiKey))
 set completed_habticas to paragraphs of pythonOut
 
 

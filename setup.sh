@@ -16,15 +16,29 @@ fi
 
 
 # create hard link to folder Omnifocus expects scripts
-if [ -f "Task to Habitica.applescript" ]; then
-	task2habiticapath=$(realpath ./Task\ to\ Habitica.applescript)
+if [ -f "scripts/HabiticaWrapper.applescript" ]; then
+	task2habiticapath=$(realpath scripts/Task\ to\ Habitica.applescript)
+	gsed -i "s+TemplateFilePath+$task2habiticapath+g" scripts/HabiticaWrapper.applescript
 else
-	echo "Can't find Task to Habitica.applescript, please verify paths"
+	echo "Can't find HabiticaWrapper.applescript, please verify paths"
+	exit 1
+fi
+if [ -f "scripts/AutosortWrapper.applescript" ]; then
+	autosortpath=$(realpath Autosort.applescript)
+	gsed -i "s+TemplateFilePath+$autosortpath+g" scripts/AutosortWrapper.applescript
+else
+	echo "Can't find AutosortWrapper.applescript, please verify paths"
 	exit 1
 fi
 
-if [ ! -f "$appScripDir/Task to Habitica.applescript" ]; then
-	ln "$task2habiticapath" "$appScripDir"
+if [ ! -f "$appScripDir/HabiticaWrapper.applescript" ]; then
+	ln "scripts/HabiticaWrapper.applescript" "$appScripDir"
 else
-	echo "found Task to Habitica already in scripts folder, not overwriting"
+	echo "found HabiticaWrapper already in scripts folder, not overwriting"
+fi
+
+if [ ! -f "$appScripDir/AutosortWrapper.applescript" ]; then
+	ln "scripts/AutosortWrapper.applescript" "$appScripDir"
+else
+	echo "found AutosortWrapper already in scripts folder, not overwriting"
 fi
